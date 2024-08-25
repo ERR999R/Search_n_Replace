@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+#AHK-Search-N-Replace
+/config
+/data
+
 # User-specific files
 *.rsuser
 *.suo
