@@ -38,13 +38,14 @@ This script automates the process of searching and replacing text using predefin
    - Choose a slot from the dropdown menu.
    - Enter your desired search and replace text.
    - Click on "Save Slot" to store the configuration.
-   
+     
    <img width="594" alt="SnR-SettingsConfig" src="https://github.com/user-attachments/assets/67ecd0cf-1e57-4c03-8e51-313e57754a1f">
 
 4. **Execute Slot**:
   - Press `F1`, `F2`, `F3`, or `F4` to execute the search and replace operation using the corresponding slot.
   
-  <img width="590" alt="SnR-Run" src="https://github.com/user-attachments/assets/b5045222-7ecb-49a5-b7c6-3e741314bf48">
+  <img width="590" alt="SnR-Run" src="https://github.com/user-attachments/assets/e43540ac-edca-4cef-8827-fb2bcdda7f52">
+
 
 - **Example**:
   - If Slot 1 is configured to replace "item" with "product", pressing `F1` will search for "item" in the selected text and replace it with "product".
