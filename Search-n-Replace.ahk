@@ -22,6 +22,8 @@ slots := ["Slot 1", "Slot 2", "Slot 3", "Slot 4"]
 ; GUI Variablen
 global searchText := ""
 global replaceText := ""
+global isGuiCreated := false  ; Variable, um zu überprüfen, ob die GUI erstellt wurde
+global SlotSavedText
 
 ; Slot-Änderungsfunktion
 SlotChange()
@@ -54,11 +56,16 @@ SaveSlotSettings()
     GuiControlGet, replaceText,, replaceText
     IniWrite, %searchText%, %iniFile%, %activeSlot%, SearchText
     IniWrite, %replaceText%, %iniFile%, %activeSlot%, ReplaceText
-    
-    ; Zeige den grünen "Slot saved!" Text an
+
+    ; Zeige den "Slot saved!" Text an
     GuiControl, Show, SlotSavedText
-    Sleep, 1100 ; Warte 1,5 Sekunden
-    GuiControl, Hide, SlotSavedText ; Verstecke den Text wieder
+    SetTimer, HideSavedText, -1200 ; Timer um den Text nach 1,2 Sekunden zu verstecken
+}
+
+; Timer-Funktion zum Verstecken des "Slot saved!" Textes
+HideSavedText()
+{
+    GuiControl, Hide, SlotSavedText
 }
 
 ; Funktion zur Ausführung des jeweiligen Slots
@@ -112,8 +119,16 @@ ExecuteSlot(slotNumber)
 ; GUI-Definition
 ShowCustomGUI()
 {
-    global slots, activeSlot, SlotSavedText
+    global slots, activeSlot, isGuiCreated, SlotSavedText
 
+    ; Prüfe, ob die GUI bereits erstellt wurde
+    if (isGuiCreated) {
+        Gui, Show  ; Zeige die GUI einfach wieder an
+        return
+    }
+
+    ; Erstelle die GUI nur einmal
+    isGuiCreated := true
     Gui, +AlwaysOnTop
     Gui, Add, Text,, Select Slot:
     Gui, Add, DropDownList, vactiveSlot gSlotChange, % "Slot 1||Slot 2|Slot 3|Slot 4"
@@ -122,7 +137,7 @@ ShowCustomGUI()
     Gui, Add, Text,, Replace Text:
     Gui, Add, Edit, vreplaceText w300
     Gui, Add, Button, gSaveSlotSettings, Save Slot
-    Gui, Add, Text, xp+60 yp+3 vSlotSavedText cGreen Hidden, SLOT SAVED! ; Der Text wird initial versteckt
+    Gui, Add, Text, xp+60 yp+3 vSlotSavedText cGreen Hidden, SLOT SAVED!
     Gui, Show,, Slot Configuration
     SlotChange() ; Initialisiere die GUI mit den Werten des ausgewählten Slots
 }
